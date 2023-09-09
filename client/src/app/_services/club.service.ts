@@ -17,4 +17,9 @@ export class ClubService {
     getAll() {
         return this.http.get<Club[]>(`${environment.apiUrl}/clubs`);
     }
+
+    save(club: Club) {
+        console.log('ClubService.save');
+        return this.http.post(`${environment.apiUrl}/clubs`, club);
+    }
 }

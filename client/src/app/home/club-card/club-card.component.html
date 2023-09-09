@@ -1,0 +1,12 @@
+<div class="podcast-card">
+  <div class="card text-center shadow-sm">
+    <div class="card-body">
+      <div>
+        <p class="h6">{{ club?.name | uppercase }}</p>
+        <p class="card-text">Descrici&oacute;n: {{ club?.text }}</p>
+        <p class="card-text">Imagen: {{ club?.image }}</p>
+      </div>
+      <img class="limited" [src]="club?.image" alt="No image available" />
+    </div>
+  </div>
+</div>

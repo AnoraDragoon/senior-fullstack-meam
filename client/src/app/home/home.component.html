@@ -33,9 +33,10 @@
     </div>
   </form>
 
-  <div *ngIf="clubs; else brokenBlock" class="row">
+  <div *ngIf="clubs && relations; else brokenBlock" class="row">
     <div *ngFor="let item of clubs" class="col-lg-3 col-md-4 py-1">
-      <app-club-card [club]="item"></app-club-card>
+      <app-club-card [club]="item" [relation]="relations|relation:user.username"
+        (relationOut)="onRelationOut($event)"></app-club-card>
     </div>
   </div>
 

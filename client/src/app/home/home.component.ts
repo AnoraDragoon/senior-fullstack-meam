@@ -1,8 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { User } from '@app/_models';
-import { Club } from '@app/_models/club';
+import { Club, ClubUser } from '@app/_models/club';
 import { AccountService, AlertService } from '@app/_services';
 import { ClubService } from '@app/_services/club.service';
 
@@ -10,6 +10,7 @@ import { ClubService } from '@app/_services/club.service';
 export class HomeComponent implements OnInit {
     user: User;
     clubs: Club[] = [];
+    relations: ClubUser[] = [];
     form: FormGroup;
 
 
@@ -29,6 +30,9 @@ export class HomeComponent implements OnInit {
             text: ['', Validators.required]
         });
         this.loadClubs();
+        this.clubService.relations$.subscribe(data => {
+            this.relations = data;
+        })
     }
 
     logout() {
@@ -38,6 +42,12 @@ export class HomeComponent implements OnInit {
     loadClubs(): void {
         this.clubService.getAll().subscribe((data) => {
             this.clubs = data;
+        });
+    }
+
+    loadRelatios(): void {
+        this.clubService.getRelations(this.user.username).subscribe((data) => {
+            this.relations = data;
         });
     }
 
@@ -63,6 +73,10 @@ export class HomeComponent implements OnInit {
         };
 
         return club;
+    }
+
+    public onRelationOut(relation: ClubUser): void {
+        this.clubService.setRelation(relation);
     }
 
     private getRandomImage(): string {

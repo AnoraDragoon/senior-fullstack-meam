@@ -9,13 +9,15 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClubCardComponent } from './home/club-card/club-card.component';
+import { RelationPipe } from './_pipes/relation.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         AlertComponent,
         HomeComponent,
-        ClubCardComponent
+        ClubCardComponent,
+        RelationPipe
     ],
     imports: [
         BrowserModule,

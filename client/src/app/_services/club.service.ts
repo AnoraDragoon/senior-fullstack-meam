@@ -1,25 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { Club } from '@app/_models/club';
+import { Club, ClubUser } from '@app/_models/club';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class ClubService {
 
-    constructor(private http: HttpClient) { }
+    private relations: BehaviorSubject<ClubUser[]> = new BehaviorSubject([]);
+    public relations$: Observable<ClubUser[]>;
+
+
+    constructor(private http: HttpClient) {
+        this.relations$ = this.relations.asObservable();
+    }
 
     getAll() {
         return this.http.get<Club[]>(`${environment.apiUrl}/clubs`);
     }
 
     save(club: Club) {
-        console.log('ClubService.save');
         return this.http.post(`${environment.apiUrl}/clubs`, club);
+    }
+
+    setRelation(relation: ClubUser): void {
+        let data: ClubUser[] = this.relations.getValue();
+        let index: number = data.indexOf(relation);
+        if (index > 0) {
+            data.push(relation);
+        } else {
+            data[index] = relation;
+        }
+        this.relations.next(data);
+    }
+
+    getRelations(username: string) {
+        const params = new HttpParams();
+        params.set('username', username);
+        return this.http.get<ClubUser[]>(`${environment.apiUrl}/clubs/relation`, { params });
+    }
+
+    saveRelation(clubUser: ClubUser) {
+        return this.http.post(`${environment.apiUrl}/clubs/relation`, clubUser);
     }
 }

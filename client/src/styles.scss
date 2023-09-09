@@ -113,3 +113,21 @@ p {
 img.limited {
   max-height: 12rem;
 }
+
+span {
+  &.relation {
+    cursor: pointer;
+    border-radius: 1rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  &.item-added {
+    background: #28a745;
+  }
+
+  &.item-pending {
+    background: #e9ecef;
+  }
+}

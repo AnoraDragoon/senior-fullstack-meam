@@ -5,6 +5,11 @@
         <p class="h6">{{ club?.name | uppercase }}</p>
         <p class="card-text">Descrici&oacute;n: {{ club?.text }}</p>
         <p class="card-text">Imagen: {{ club?.image }}</p>
+        <span *ngIf="relation?.activated; else elseRelation" class="relation item-added p-3"
+          (click)="toggleRelation()"></span>
+        <ng-template #elseRelation>
+          <span class="relation item-pending p-3" (click)="toggleRelation()"></span>
+        </ng-template>
       </div>
       <img class="limited" [src]="club?.image" alt="No image available" />
     </div>
